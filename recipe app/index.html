@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe App Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      margin: 0;
+      background: linear-gradient(120deg, #ff7b54, #ffb347);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-container {
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      width: 350px;
+      box-shadow: 0px 10px 25px rgba(0,0,0,0.2);
+      animation: fadeIn 1s ease forwards;
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #ff7b54;
+      letter-spacing: 1px;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 40px 12px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .input-group input:focus {
+      border-color: #ff7b54;
+      box-shadow: 0 0 8px rgba(255,123,84,0.3);
+    }
+
+    .input-group .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #ff7b54;
+      font-weight: bold;
+      user-select: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #ff7b54;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ff4b2b;
+    }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .login-footer a {
+      color: #ff7b54;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>Login to Recipe App</h2>
+    <div class="input-group">
+      <input type="email" id="email" placeholder="Email">
+    </div>
+    <div class="input-group">
+      <input type="password" id="password" placeholder="Password">
+      <span class="toggle-password">Show</span>
+    </div>
+    <button id="loginBtn">Login</button>
+    <div class="login-footer">
+      Don't have an account? <a id="signupLink">Signup</a>
+    </div>
+  </div>
+
+  <script>
+    const togglePassword = document.querySelector(".toggle-password");
+    const passwordInput = document.getElementById("password");
+
+    togglePassword.addEventListener("click", () => {
+      if(passwordInput.type === "password") {
+        passwordInput.type = "text";
+        togglePassword.textContent = "Hide";
+      } else {
+        passwordInput.type = "password";
+        togglePassword.textContent = "Show";
+      }
+    });
+
+    const loginBtn = document.getElementById("loginBtn");
+    loginBtn.addEventListener("click", () => {
+      const email = document.getElementById("email").value;
+      const password = passwordInput.value.trim();
+
+      if(!email || !password){
+        alert("Please enter email and password!");
+        return;
+      }
+
+      // Dummy login
+
+           let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Find user with matching email & password
+    const user = users.find(u => u.email === email && u.password === password);
+
+    if(user){
+      alert(`Welcome back, ${user.name}!`);
+      // Save current logged-in user
+      localStorage.setItem("currentUser", JSON.stringify(user));
+      // Redirect to main app page
+      window.location.href = "recipe.html";
+    } else {
+      alert("Invalid email or password!");
+    }
+  });
+
+
+      
+
+    const signupLink = document.getElementById("signupLink");
+    signupLink.addEventListener("click", () => {
+      alert("Redirect to Signup page (signup.html)");
+            window.location.href = "signup.html"; // go to login page
+
+    });
+  </script>
+
+</body>
+</html>

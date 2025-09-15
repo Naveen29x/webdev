@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe App Signup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            background: linear-gradient(120deg, #ff7b54, #ffb347);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .signup-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            width: 350px;
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease forwards;
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .signup-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ff7b54;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #ff7b54;
+            box-shadow: 0 0 8px rgba(255, 123, 84, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ff7b54;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #ff4b2b;
+        }
+
+        .signup-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .signup-footer a {
+            color: #ff7b54;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="signup-container">
+        <h2>Create an Account</h2>
+        <div class="input-group">
+            <input type="text" id="fullName" placeholder="Full Name">
+        </div>
+        <div class="input-group">
+            <input type="email" id="email" placeholder="Email">
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Password">
+        </div>
+        <div class="input-group">
+            <input type="password" id="confirmPassword" placeholder="Confirm Password">
+        </div>
+        <button id="signupBtn">Signup</button>
+        <div class="signup-footer">
+            Already have an account? <a id="loginLink">Login</a>
+        </div>
+    </div>
+
+    <script>
+        const signupBtn = document.getElementById("signupBtn");
+
+        signupBtn.addEventListener("click", () => {
+            const name = document.getElementById("fullName").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+            if (!name || !email || !password || !confirmPassword) {
+                alert("Please fill all fields!");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            // Regex for basic email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert("Enter a valid email!");
+                return;
+            }
+
+
+
+
+
+
+
+
+
+
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+
+            // Check if email already exists
+            const userExists = users.some(u => u.email === email);
+            if (userExists) {
+                alert("Email already registered! Please login.");
+                return;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // Add new user
+            const newUser = { name, email, password };
+            users.push(newUser);
+
+            // Save updated users array in localStorage
+            localStorage.setItem("users", JSON.stringify(users));
+
+            alert(`Signup successful!\nWelcome ${name}`);
+
+            // Redirect to login page
+            window.location.href = "index.html";
+        });
+
+        const loginLink = document.getElementById("loginLink");
+        loginLink.addEventListener("click", () => {
+            window.location.href = "index.html"; // go to login page
+        });
+    </script>
+
+</body>
+
+</html>
